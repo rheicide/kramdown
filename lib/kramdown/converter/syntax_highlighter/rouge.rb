@@ -27,7 +27,7 @@ module Kramdown::Converter::SyntaxHighlighter
       lexer = ::Rouge::Lexer.find_fancy(lang || opts[:default_lang], text)
       return nil if opts[:disable] || !lexer
 
-      formatter = (opts.fetch(:formatter, ::Rouge::Formatters::HTML)).new(opts)
+      formatter = (opts.fetch(:formatter, ::Rouge::Formatters::HTMLLegacy)).new(opts)
       formatter.format(lexer.lex(text))
     end
 
@@ -51,7 +51,7 @@ module Kramdown::Converter::SyntaxHighlighter
       end
 
       cache[:span] = opts.merge(span_opts).update(:wrap => false)
-      cache[:block] = opts.merge(block_opts)
+      cache[:block] = opts.merge(block_opts).update(:css_class => "highlight")
     end
 
   end
